@@ -4,6 +4,12 @@ import Navbar from './Components/Navbar'; // importing navbar
 import Textform from './Components/Textform';
 import About from './Components/About';
 import {useState} from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 let name = 'Avishek';
 function App() {
@@ -13,7 +19,7 @@ function App() {
   const toggleMode = ()=>{
     if (mode === 'light') {
       setMode('dark');
-      document.body.style.backgroundColor = 'black'; // changing the whole body into grey
+      document.body.style.backgroundColor = 'black'; // changing the whole body into black
     } else {
       setMode('light');
       document.body.style.backgroundColor = 'white';
@@ -22,15 +28,24 @@ function App() {
 
   return (
     <>
+    <Router>
+    <Navbar mode = {mode} toggleMode = {toggleMode} title = 'Home' aboutText = 'About'/> 
+    <div className='container my-3'>
+      <switch>
+        <Route exact path = '/'> {/* '/' means your default page, whenever you run your react application, the default page that shows up on your screen or any user */}
+             <Textform mode = {mode} heading = 'Text Area'/>
+        </Route>  
 
-    {/* Putting Navbar from component*/}
-      <Navbar mode = {mode} toggleMode = {toggleMode} title = 'Practice Project' aboutText = 'About Us'/> 
-      <Textform mode = {mode} heading = 'Text Area'/>
-      <About/>
-      <div>
-        <p>lorem ipsum aoierfja ajsoerij ashkjnv ajorjq nmdfjhaoa woejr </p>
-        <h1>Hey, I'm {name}</h1>
-      </div>
+        <Route exact path = "/about">
+          <About/>
+        </Route>
+
+        
+      </switch>
+    </div>
+    </Router>
+
+    
     </>
   );
 }
